@@ -27,7 +27,7 @@ num_gpus = 1
 ctx = [mx.gpu(i) for i in range(num_gpus)]
 
 # Get the model CIFAR_ResNet20_v1, with 10 output classes, without pre-trained weights
-net = getShufflenetV2("1x", num_class=10)
+net = getShufflenetV2("1x", num_classes=10)
 net.initialize(mx.init.Xavier(), ctx = ctx)
 
 ################################################################
