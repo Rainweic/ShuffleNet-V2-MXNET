@@ -1,7 +1,7 @@
 '''
 @Author: Rainweic
 @Date: 2020-02-01 10:44:58
-@LastEditTime : 2020-02-01 21:38:55
+@LastEditTime : 2020-02-02 00:00:06
 @LastEditors  : Please set LastEditors
 @Description: In User Settings Edit
 @FilePath: /ShuffleNet-V2-MXNET/shufflenetv2.py
@@ -138,6 +138,7 @@ class ShuffleNetV2(HybridBlock):
         x = self.conv5_bn_relu(x)
         x = self.gap(x)
         x = self.linear(x)
+        x = F.SoftmaxActivation(x)
         return x
 
 def getShufflenetV2(type, num_classes):
