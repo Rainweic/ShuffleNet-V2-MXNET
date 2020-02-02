@@ -27,18 +27,14 @@ import matplotlib.pyplot as plt
 from mxnet import gluon, nd, image
 from mxnet.gluon.data.vision import transforms
 from gluoncv import utils
-from gluoncv.model_zoo import get_model
 
 from shufflenetv2 import getShufflenetV2
 
 ################################################################
 #
-# Then, we download and show the example image:
+# Then, we show the example image:
 
-url = 'https://raw.githubusercontent.com/dmlc/web-data/master/gluoncv/classification/plane-draw.jpeg'
-im_fname = utils.download(url)
-
-img = image.imread(im_fname)
+img = image.imread("./timg.jpeg")
 
 plt.imshow(img.asnumpy())
 plt.show()
@@ -74,7 +70,7 @@ plt.show()
 # Next, we load a pre-trained model.
 
 net = getShufflenetV2("1x", 10)
-net.load_parameters('dive_deep_cifar10_shufflenet_v2.params')
+net.load_parameters('cifar10_shufflenet_v2.params')
 
 ################################################################
 #
