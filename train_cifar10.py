@@ -85,7 +85,7 @@ transform_test = transforms.Compose([
 # training and validation datasets.
 
 # Batch Size for Each GPU
-per_device_batch_size = 128
+per_device_batch_size = 2048
 # Number of data loader workers
 num_workers = 8
 # Calculate effective total batch size
@@ -115,9 +115,9 @@ lr_decay = 0.1
 lr_decay_epoch = [80, 160, np.inf]
 
 # Nesterov accelerated gradient descent
-optimizer = 'nag'
+optimizer = 'sgd'
 # Set parameters
-optimizer_params = {'learning_rate': 0.1, 'wd': 0.0001, 'momentum': 0.9}
+optimizer_params = {'learning_rate': 0.1}
 
 # Define our trainer for net
 trainer = gluon.Trainer(net.collect_params(), optimizer, optimizer_params)
@@ -198,7 +198,7 @@ def test(ctx, val_data):
 #   In order to finish the tutorial quickly, we only train for 3 epochs.
 #   In your experiments, we recommend setting ``epochs=240``.
 
-epochs = 3
+epochs = 240
 lr_decay_count = 0
 
 for epoch in range(epochs):
@@ -267,9 +267,9 @@ train_history.plot()
 # After training, we usually want to save it for later use.
 # This is simply done with:
 
-net.save_parameters('dive_deep_cifar10_shufflenet_v2.params')
+net.save_parameters('cifar10_shufflenet_v2.params')
 
 ################################################################
 # Next time if you need to use it, just run
 
-net.load_parameters('dive_deep_cifar10_shufflenet_v2.params', ctx=ctx)
+net.load_parameters('cifar10_shufflenet_v2.params', ctx=ctx)
