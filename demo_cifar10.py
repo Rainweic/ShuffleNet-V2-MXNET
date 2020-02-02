@@ -27,6 +27,7 @@ import matplotlib.pyplot as plt
 from mxnet import gluon, nd, image
 from mxnet.gluon.data.vision import transforms
 from gluoncv import utils
+from gluoncv.model_zoo import get_model
 
 from shufflenetv2 import getShufflenetV2
 
@@ -34,7 +35,7 @@ from shufflenetv2 import getShufflenetV2
 #
 # Then, we show the example image:
 
-img = image.imread("./timg.jpeg")
+img = image.imread("./timg2.jpeg")
 
 plt.imshow(img.asnumpy())
 plt.show()
@@ -46,7 +47,7 @@ plt.show()
 
 transform_fn = transforms.Compose([
     transforms.Resize(32),
-    transforms.CenterCrop(32),
+    # transforms.CenterCrop(32),
     transforms.ToTensor(),
     transforms.Normalize([0.4914, 0.4822, 0.4465], [0.2023, 0.1994, 0.2010])
 ])
@@ -69,8 +70,9 @@ plt.show()
 #
 # Next, we load a pre-trained model.
 
-net = getShufflenetV2("1x", 10)
-net.load_parameters('cifar10_shufflenet_v2.params')
+# net = getShufflenetV2("2x", 10)
+# net.load_parameters('cifar10_shufflenet_v2.params')
+net = get_model('shufflenet', classes=10, pretrained=True)
 
 ################################################################
 #

@@ -1,7 +1,7 @@
 '''
 @Author: Rainweic
 @Date: 2020-02-01 10:44:58
-@LastEditTime : 2020-02-02 09:56:58
+@LastEditTime : 2020-02-03 00:16:07
 @LastEditors  : Please set LastEditors
 @Description: In User Settings Edit
 @FilePath: /ShuffleNet-V2-MXNET/shufflenetv2.py
@@ -10,15 +10,20 @@ from mxnet import nd
 from mxnet.gluon import nn
 from mxnet.gluon import HybridBlock
 
-def shuffle_channel(x, groups):
-    n, c, h, w = x.shape
-    assert c % groups == 0, "Channel:{}, Groups:{}, Channel % Group != 0, shuffle_channel can't work!".format(
-        c, groups
-    )
-    x = nd.Reshape(x, shape=(n, groups, c // groups, h, w))
-    x = nd.transpose(x, axes=(0, 2, 1, 3, 4))
-    x = nd.Reshape(x, shape=(n, -1, h, w))
-    return x
+class ShuffleChannel(HybridBlock):
+
+    def __init__(self, groups):
+        self.groups = groups
+
+    def hybrid_forward(self, F, x):
+        n, c, h, w = x.shape
+        assert c % groups == 0, "Channel:{}, Groups:{}, Channel % Group != 0, shuffle_channel can't work!".format(
+            c, groups
+        )
+        x = F.Reshape(x, shape=(n, self.groups, c // self.groups, h, w))
+        x = F.transpose(x, axes=(0, 2, 1, 3, 4))
+        x = F.Reshape(x, shape=(n, -1, h, w))
+        return x
     
 
 class Conv2D_BN_ReLU(HybridBlock):
@@ -58,6 +63,7 @@ class ShufflenetUnit1(HybridBlock):
         self.conv1_bn_relu = Conv2D_BN_ReLU(out_channels // 2, 1, 1)
         self.dconv_bn = DepthwiseConv2D_BN(out_channels // 2, 3)
         self.conv2_bn_relu = Conv2D_BN_ReLU(out_channels // 2, 1, 1)
+        self.shufflechannel(2)
 
     def hybrid_forward(self, F, x):
         assert x.shape[1] == self.out_channels, "This feature map's in_channels ans out_channels\
@@ -68,7 +74,7 @@ class ShufflenetUnit1(HybridBlock):
         x1 = self.dconv_bn(x1)
         x1 = self.conv2_bn_relu(x1)
         x = F.concat(x1, x2)
-        x = shuffle_channel(x, 2)
+        x = self.shufflechannel(x)
         return x
 
 class ShufflenetUnit2(HybridBlock):
@@ -85,6 +91,8 @@ class ShufflenetUnit2(HybridBlock):
         self.shortcut_dconv_bn = DepthwiseConv2D_BN(in_channels, 3, 2)
         self.shortcut_conv_bn_relu = Conv2D_BN_ReLU(in_channels, 1, 1)
 
+        self.shufflechannel = ShuffleChannel(2)
+
     def hybrid_forward(self, F, x):
         shortcut, x = x, x
 
@@ -96,7 +104,7 @@ class ShufflenetUnit2(HybridBlock):
         shortcut = self.shortcut_conv_bn_relu(shortcut)
 
         x = F.concat(x, shortcut)
-        x = shuffle_channel(x, 2)
+        x = self.shufflechannel(x)
         return x
 
 class ShufflenetStage(HybridBlock):
