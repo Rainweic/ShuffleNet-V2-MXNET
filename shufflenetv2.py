@@ -1,7 +1,7 @@
 '''
 @Author: Rainweic
 @Date: 2020-02-01 10:44:58
-@LastEditTime : 2020-02-03 00:24:35
+@LastEditTime : 2020-02-03 00:26:50
 @LastEditors  : Please set LastEditors
 @Description: In User Settings Edit
 @FilePath: /ShuffleNet-V2-MXNET/shufflenetv2.py
@@ -18,8 +18,8 @@ class ShuffleChannel(HybridBlock):
 
     def hybrid_forward(self, F, x):
         n, c, h, w = x.shape
-        assert c % groups == 0, "Channel:{}, Groups:{}, Channel % Group != 0, shuffle_channel can't work!".format(
-            c, groups
+        assert c % self.groups == 0, "Channel:{}, Groups:{}, Channel % Group != 0, shuffle_channel can't work!".format(
+            c, self.groups
         )
         x = F.Reshape(x, shape=(n, self.groups, c // self.groups, h, w))
         x = F.transpose(x, axes=(0, 2, 1, 3, 4))
