@@ -115,7 +115,7 @@ lr_decay = 0.1
 lr_decay_epoch = [80, 160, np.inf]
 
 # Nesterov accelerated gradient descent
-optimizer = 'sgd'
+optimizer = 'adam'
 # Set parameters
 optimizer_params = {'learning_rate': 0.1}
 
@@ -198,7 +198,7 @@ def test(ctx, val_data):
 #   In order to finish the tutorial quickly, we only train for 3 epochs.
 #   In your experiments, we recommend setting ``epochs=240``.
 
-epochs = 240
+epochs = 3
 lr_decay_count = 0
 
 for epoch in range(epochs):
