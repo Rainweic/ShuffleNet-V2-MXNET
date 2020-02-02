@@ -1,7 +1,7 @@
 '''
 @Author: Rainweic
 @Date: 2020-02-01 10:44:58
-@LastEditTime : 2020-02-03 00:20:24
+@LastEditTime : 2020-02-03 00:24:35
 @LastEditors  : Please set LastEditors
 @Description: In User Settings Edit
 @FilePath: /ShuffleNet-V2-MXNET/shufflenetv2.py
@@ -13,6 +13,7 @@ from mxnet.gluon import HybridBlock
 class ShuffleChannel(HybridBlock):
 
     def __init__(self, groups):
+        super(ShuffleChannel, self).__init__()
         self.groups = groups
 
     def hybrid_forward(self, F, x):
