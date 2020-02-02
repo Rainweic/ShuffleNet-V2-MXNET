@@ -1,7 +1,7 @@
 '''
 @Author: Rainweic
 @Date: 2020-02-01 10:44:58
-@LastEditTime : 2020-02-03 00:16:07
+@LastEditTime : 2020-02-03 00:20:24
 @LastEditors  : Please set LastEditors
 @Description: In User Settings Edit
 @FilePath: /ShuffleNet-V2-MXNET/shufflenetv2.py
@@ -63,7 +63,7 @@ class ShufflenetUnit1(HybridBlock):
         self.conv1_bn_relu = Conv2D_BN_ReLU(out_channels // 2, 1, 1)
         self.dconv_bn = DepthwiseConv2D_BN(out_channels // 2, 3)
         self.conv2_bn_relu = Conv2D_BN_ReLU(out_channels // 2, 1, 1)
-        self.shufflechannel(2)
+        self.shufflechannel = ShuffleChannel(2)
 
     def hybrid_forward(self, F, x):
         assert x.shape[1] == self.out_channels, "This feature map's in_channels ans out_channels\
