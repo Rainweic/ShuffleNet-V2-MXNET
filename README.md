@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2020-01-31 20:47:01
- * @LastEditTime : 2020-02-02 11:28:28
+ * @LastEditTime : 2020-02-02 11:29:44
  * @LastEditors  : Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /ShuffleNet-V2-MXNET/README.md
@@ -22,7 +22,7 @@ pip3 install mxnet-cu90 gluoncv
 **cuda101->mxnetcu101** <br>
 
 ## run demo:
-### Step1:Download pretrained model and put it in ./
+### Step1： Download pretrained model and put it in ./
 https://pan.baidu.com/s/1nBkvxF_RvHXNtwjMbNUlgA
 ### Step2:
 ```python
