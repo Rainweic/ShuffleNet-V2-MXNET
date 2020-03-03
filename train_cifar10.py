@@ -24,8 +24,8 @@ from shufflenetv2 import getShufflenetV2
 
 # number of GPUs to use
 num_gpus = 1
-ctx = [mx.gpu(i) for i in range(num_gpus)]
-
+#ctx = [mx.gpu(i) for i in range(num_gpus)]
+ctx = mx.cpu()
 # Get the model CIFAR_ResNet20_v1, with 10 output classes, without pre-trained weights
 net = getShufflenetV2(classes=10, type="1x")
 net.initialize(mx.init.Xavier(), ctx = ctx)
@@ -51,8 +51,8 @@ net.initialize(mx.init.Xavier(), ctx = ctx)
 # With ``Gluon``, we can create our transform function as following:
 
 transform_train = transforms.Compose([
-    # Randomly crop an area and resize it to be 32x32, then pad it to be 40x40
-    gcv_transforms.RandomCrop(32, pad=4),
+    # Randomly crop an area and resize it to be 224x224
+    gcv_transforms.RandomCrop(224),
     # Randomly flip the image horizontally
     transforms.RandomFlipLeftRight(),
     # Transpose the image from height*width*num_channels to num_channels*height*width
@@ -73,6 +73,7 @@ transform_train = transforms.Compose([
 # function for prediction is:
 
 transform_test = transforms.Compose([
+    transforms.Resize(224),
     transforms.ToTensor(),
     transforms.Normalize([0.4914, 0.4822, 0.4465], [0.2023, 0.1994, 0.2010])
 ])
