@@ -24,8 +24,8 @@ from shufflenetv2 import getShufflenetV2
 
 # number of GPUs to use
 num_gpus = 1
-#ctx = [mx.gpu(i) for i in range(num_gpus)]
-ctx = mx.cpu()
+ctx = [mx.gpu(i) for i in range(num_gpus)]
+
 # Get the model CIFAR_ResNet20_v1, with 10 output classes, without pre-trained weights
 net = getShufflenetV2(classes=10, type="1x")
 net.initialize(mx.init.Xavier(), ctx = ctx)
@@ -51,8 +51,7 @@ net.initialize(mx.init.Xavier(), ctx = ctx)
 # With ``Gluon``, we can create our transform function as following:
 
 transform_train = transforms.Compose([
-    # Randomly crop an area and resize it to be 224x224
-    gcv_transforms.RandomCrop(224),
+    transforms.Resize(224),
     # Randomly flip the image horizontally
     transforms.RandomFlipLeftRight(),
     # Transpose the image from height*width*num_channels to num_channels*height*width
@@ -86,7 +85,7 @@ transform_test = transforms.Compose([
 # training and validation datasets.
 
 # Batch Size for Each GPU
-per_device_batch_size = 2048
+per_device_batch_size = 256
 # Number of data loader workers
 num_workers = 8
 # Calculate effective total batch size
