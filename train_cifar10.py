@@ -27,7 +27,7 @@ num_gpus = 1
 ctx = [mx.gpu(i) for i in range(num_gpus)]
 
 # Get the model CIFAR_ResNet20_v1, with 10 output classes, without pre-trained weights
-net = getShufflenetV2("1x", num_classes=10)
+net = getShufflenetV2(classes=10, type="1x")
 net.initialize(mx.init.Xavier(), ctx = ctx)
 
 ################################################################
@@ -198,7 +198,7 @@ def test(ctx, val_data):
 #   In order to finish the tutorial quickly, we only train for 3 epochs.
 #   In your experiments, we recommend setting ``epochs=240``.
 
-epochs = 3
+epochs = 240
 lr_decay_count = 0
 
 for epoch in range(epochs):
