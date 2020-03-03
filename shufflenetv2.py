@@ -137,7 +137,7 @@ class ShuffleNetV2(HybridBlock):
             # stage4
             ShufflenetStage(channels_per_stage[1], channels_per_stage[2], 4),
             # conv5_bn_relu
-            conv5_bn_relu=Conv2D_BN_ReLU(1024, 1, 1)
+            Conv2D_BN_ReLU(1024, 1, 1)
         )
 
 
