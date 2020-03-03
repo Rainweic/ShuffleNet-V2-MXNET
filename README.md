@@ -21,15 +21,7 @@ pip3 install mxnet-cu90 gluoncv
 **cuda10.0->mxnetcu100** <br>
 **cuda101->mxnetcu101** <br>
 
-## run demo:
-### Step1： Download pretrained model and put it in ./
-https://pan.baidu.com/s/1nBkvxF_RvHXNtwjMbNUlgA
-### Step2:
-```python
-python3 demo_cifar10.py
-```
-
-## train: 
+## train(gpu): 
 ```python
 python3 train_cifar10.py
 ```

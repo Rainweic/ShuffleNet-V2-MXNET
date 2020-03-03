@@ -70,7 +70,7 @@ plt.show()
 #
 # Next, we load a pre-trained model.
 
-net = getShufflenetV2("1x", 10)
+net = getShufflenetV2(classes=10, type='1x')
 net.load_parameters('cifar10_shufflenet_v2.params')
 #net = get_model('shufflenet', classes=10, pretrained=True)
 
